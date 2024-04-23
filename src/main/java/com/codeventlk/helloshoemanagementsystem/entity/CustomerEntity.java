@@ -2,11 +2,13 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.Data;
 
 import java.util.Date;
 
 @Entity
 @Table(name = "customer")
+@Data
 public class CustomerEntity {
 
     @Id
