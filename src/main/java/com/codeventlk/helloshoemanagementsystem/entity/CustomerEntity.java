@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -37,5 +38,8 @@ public class CustomerEntity {
     private String contactNo;
     private String email;
     private Timestamp recentPurchasedDate;
+
+    @OneToMany(mappedBy = "customerEntity",cascade = CascadeType.ALL)
+    private List<OrderEntity> orderEntities;
 
 }

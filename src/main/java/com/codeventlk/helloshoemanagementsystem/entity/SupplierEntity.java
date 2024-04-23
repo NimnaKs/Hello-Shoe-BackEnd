@@ -3,6 +3,8 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 import com.codeventlk.helloshoemanagementsystem.Enum.Category;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "Supplier")
 public class SupplierEntity {
@@ -21,4 +23,6 @@ public class SupplierEntity {
     private String contactNo1;
     private String contactNo2;
     private String email;
+    @OneToMany(mappedBy = "supplierEntity",cascade = CascadeType.ALL)
+    private List<StockEntity> stockEntities;
 }
