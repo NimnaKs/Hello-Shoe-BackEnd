@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Data
@@ -52,5 +53,16 @@ public class CustomerDTO implements SuperDTO {
     @NotBlank(message = "Postal code cannot be blank")
     @Pattern(regexp = "\\d{5}", message = "Postal code must be 5 digits")
     private String postalCode;
+
+    @NotBlank(message = "Contact No cannot be blank")
+    @Pattern(regexp = "^\\+?[0-9\\-\\s]+$", message = "Invalid contact number format")
+    private String contactNo;
+
+    @Email(message = "Invalid email format")
+    @NotBlank(message = "Email cannot be blank")
+    private String email;
+
+    @NotNull(message = "Recent purchased date cannot be null")
+    private Timestamp recentPurchasedDate;
 
 }

@@ -1,4 +1,4 @@
 package com.codeventlk.helloshoemanagementsystem.controller;
 
-public class Admin {
+public class AdminPanel {
 }

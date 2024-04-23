@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -32,5 +33,8 @@ public class CustomerEntity {
     private String address3;
     private String address4;
     private String postalCode;
+    private String contactNo;
+    private String email;
+    private Timestamp recentPurchasedDate;
 
 }

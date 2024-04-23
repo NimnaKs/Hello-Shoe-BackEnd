@@ -61,6 +61,9 @@ public class CustomerServiceIMPL implements CustomerService {
         customerEntity.get().setAddress3(customerDTO.getAddress3());
         customerEntity.get().setAddress4(customerDTO.getAddress4());
         customerEntity.get().setPostalCode(customerDTO.getPostalCode());
+        customerEntity.get().setContactNo(customerDTO.getContactNo());
+        customerEntity.get().setEmail(customerDTO.getEmail());
+        customerEntity.get().setRecentPurchasedDate(customerDTO.getRecentPurchasedDate());
     }
 
     private String getNextCustomerId() {
