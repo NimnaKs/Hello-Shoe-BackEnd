@@ -7,16 +7,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 
 @Component
 @AllArgsConstructor
 public class ConversionData {
     final private ModelMapper modelMapper;
-    public CustomerDTO convertToCustomerDTO(CustomerEntity customerEntity){
+    public CustomerDTO convertToCustomerDTO(Optional<CustomerEntity> customerEntity){
         return modelMapper.map(customerEntity, CustomerDTO.class);
     }
 
-    public CustomerEntity convertToCustomerEntity(CustomerDTO customerDTO){
+    public CustomerEntity convertToCustomerEntity(Optional<CustomerDTO> customerDTO){
         return modelMapper.map(customerDTO, CustomerEntity.class);
     }
 
