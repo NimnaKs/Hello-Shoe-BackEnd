@@ -1,7 +1,8 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
+import com.codeventlk.helloshoemanagementsystem.Enum.Gender;
+import com.codeventlk.helloshoemanagementsystem.Enum.Level;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.Data;
 
 import java.sql.Timestamp;

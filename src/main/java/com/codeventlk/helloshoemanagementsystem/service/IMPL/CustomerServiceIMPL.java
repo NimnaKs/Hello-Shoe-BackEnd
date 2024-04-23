@@ -3,7 +3,7 @@ package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
 import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.CustomerEntity;
-import com.codeventlk.helloshoemanagementsystem.entity.Level;
+import com.codeventlk.helloshoemanagementsystem.Enum.Level;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.repository.CustomerServiceDao;
 import com.codeventlk.helloshoemanagementsystem.service.CustomerService;

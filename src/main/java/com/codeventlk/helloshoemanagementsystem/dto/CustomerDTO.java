@@ -1,7 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.dto;
 
-import com.codeventlk.helloshoemanagementsystem.entity.Gender;
-import com.codeventlk.helloshoemanagementsystem.entity.Level;
+import com.codeventlk.helloshoemanagementsystem.Enum.Gender;
+import com.codeventlk.helloshoemanagementsystem.Enum.Level;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

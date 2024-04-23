@@ -1,5 +1,6 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
+import com.codeventlk.helloshoemanagementsystem.Enum.Category;
 import jakarta.persistence.*;
 
 @Entity
