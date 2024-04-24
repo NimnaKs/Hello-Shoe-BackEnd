@@ -4,6 +4,7 @@ import com.codeventlk.helloshoemanagementsystem.Enum.PaymentMethod;
 import jakarta.persistence.*;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @Table(name = "Orders")
@@ -22,4 +23,7 @@ public class OrderEntity {
     @ManyToOne
     @JoinColumn(name = "email",nullable = false)
     private UserEntity userEntity;
+
+    @OneToMany(mappedBy = "orderEntity",cascade = CascadeType.ALL)
+    private List<StockSizeOrderDetailsEntity> stockSizeOrderDetailsEntities ;
 }
