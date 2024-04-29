@@ -1,10 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.dto;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Category;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class SupplierDTO implements SuperDTO {
 
-    @NotBlank(message = "Supplier code cannot be blank")
+    @Null(message = "Supplier Code generate by program.")
     private String supplierCode;
 
     @NotBlank(message = "Supplier name cannot be blank")
@@ -26,6 +23,7 @@ public class SupplierDTO implements SuperDTO {
     @NotBlank(message = "Address Line 01 cannot be blank")
     private String address1;
 
+    @NotBlank(message = "Address Line 02 cannot be blank")
     private String address2;
 
     @NotBlank(message = "Address Line 03 cannot be blank")

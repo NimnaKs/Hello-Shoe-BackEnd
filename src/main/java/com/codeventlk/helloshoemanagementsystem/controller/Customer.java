@@ -34,7 +34,7 @@ public class Customer {
 
         try {
             customerService.saveCustomer(customerDTO);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Customer Details saved Successfully.");
+            return ResponseEntity.status(HttpStatus.CREATED).body("Customer Details saved Successfully.");
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Customer saved Unsuccessfully.\nMore Details\n"+exception);

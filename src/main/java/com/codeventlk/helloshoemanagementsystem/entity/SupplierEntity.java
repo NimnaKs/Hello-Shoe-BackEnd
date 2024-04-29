@@ -2,11 +2,13 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Category;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Supplier")
+@Data
 public class SupplierEntity {
 
     @Id
