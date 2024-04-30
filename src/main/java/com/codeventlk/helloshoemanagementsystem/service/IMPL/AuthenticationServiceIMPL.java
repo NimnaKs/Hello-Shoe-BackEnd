@@ -1,5 +1,6 @@
 package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 
+import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
 import com.codeventlk.helloshoemanagementsystem.dto.UserDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
@@ -32,7 +33,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     @Override
     public JwtAuthResponse signUp(SignUp signUp) {
         UserDTO userDTO = UserDTO.builder()
-                .id(UUID.randomUUID().toString())
+                .id(UtilMatters.generateId())
                 .email(signUp.getEmail())
                 .password(passwordEncoder.encode(signUp.getPassword()))
                 .role(signUp.getRole())

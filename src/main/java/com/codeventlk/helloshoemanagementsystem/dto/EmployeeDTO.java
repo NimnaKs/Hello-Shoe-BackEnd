@@ -1,6 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.dto;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Gender;
+import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,7 +24,7 @@ public class EmployeeDTO implements SuperDTO{
     @NotNull(message = "Gender cannot be null")
     private Gender gender;
     @NotNull(message = "Status cannot be null")
-    private String status;
+    private Status status;
     @NotNull(message = "Designation cannot be null")
     private String designation;
     @Past(message = "Date of birth should be in the past")
@@ -56,5 +57,4 @@ public class EmployeeDTO implements SuperDTO{
     @NotBlank(message = "Emergency Contact No cannot be blank")
     @Pattern(regexp = "^\\+?[0-9\\-\\s]+$", message = "Invalid Emergency contact number format")
     private String emergencyContact;
-
 }

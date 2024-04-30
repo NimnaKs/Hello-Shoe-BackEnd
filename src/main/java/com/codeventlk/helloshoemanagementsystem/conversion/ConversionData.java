@@ -1,9 +1,11 @@
 package com.codeventlk.helloshoemanagementsystem.conversion;
 
 import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
+import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.UserDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.CustomerEntity;
+import com.codeventlk.helloshoemanagementsystem.entity.EmployeeEntity;
 import com.codeventlk.helloshoemanagementsystem.entity.SupplierEntity;
 import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
 import lombok.AllArgsConstructor;
@@ -52,7 +54,15 @@ public class ConversionData {
         return modelMapper.map(userDTO, UserEntity.class);
     }
 
-    public UserDTO toUserDTO(UserEntity userEntity){
-        return modelMapper.map(userEntity, UserDTO.class);
+    public EmployeeEntity toEmployeeEntity(EmployeeDTO employeeDTO){
+        return modelMapper.map(employeeDTO, EmployeeEntity.class);
+    }
+
+    public EmployeeDTO toEmployeeDTO(Optional<EmployeeEntity> employeeEntity){
+        return modelMapper.map(employeeEntity, EmployeeDTO.class);
+    }
+
+    public List<EmployeeDTO> toEmployeeDTOList(List<EmployeeEntity> employeeEntities) {
+        return modelMapper.map(employeeEntities,List.class);
     }
 }
