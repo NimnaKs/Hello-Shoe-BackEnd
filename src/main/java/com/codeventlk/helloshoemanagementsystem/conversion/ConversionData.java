@@ -2,8 +2,10 @@ package com.codeventlk.helloshoemanagementsystem.conversion;
 
 import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
+import com.codeventlk.helloshoemanagementsystem.dto.UserDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.CustomerEntity;
 import com.codeventlk.helloshoemanagementsystem.entity.SupplierEntity;
+import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -44,5 +46,13 @@ public class ConversionData {
 
     public List<SupplierEntity> getSupplierEntityList(List<SupplierEntity> supplierDTOs){
         return modelMapper.map(supplierDTOs,List.class);
+    }
+
+    public UserEntity toUserEntity(UserDTO userDTO){
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
+
+    public UserDTO toUserDTO(UserEntity userEntity){
+        return modelMapper.map(userEntity, UserDTO.class);
     }
 }
