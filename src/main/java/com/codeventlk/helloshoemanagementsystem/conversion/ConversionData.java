@@ -1,13 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.conversion;
 
-import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.UserDTO;
-import com.codeventlk.helloshoemanagementsystem.entity.CustomerEntity;
-import com.codeventlk.helloshoemanagementsystem.entity.EmployeeEntity;
-import com.codeventlk.helloshoemanagementsystem.entity.SupplierEntity;
-import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
+import com.codeventlk.helloshoemanagementsystem.dto.*;
+import com.codeventlk.helloshoemanagementsystem.entity.*;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -64,5 +58,17 @@ public class ConversionData {
 
     public List<EmployeeDTO> toEmployeeDTOList(List<EmployeeEntity> employeeEntities) {
         return modelMapper.map(employeeEntities,List.class);
+    }
+
+    public GenderEntity toGenderEntity(GenderDTO genderDTO) {
+        return modelMapper.map(genderDTO, GenderEntity.class);
+    }
+
+    public GenderDTO toGenderDTO(GenderEntity genderEntity){
+        return modelMapper.map(genderEntity, GenderDTO.class);
+    }
+
+    public List<GenderDTO> convertToGenderDTO(List<GenderEntity> genderEntities) {
+        return modelMapper.map(genderEntities,List.class);
     }
 }

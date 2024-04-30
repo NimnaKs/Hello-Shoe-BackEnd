@@ -1,11 +1,13 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table (name = "gender")
+@Data
 public class GenderEntity {
     @Id
     private String genderCode;

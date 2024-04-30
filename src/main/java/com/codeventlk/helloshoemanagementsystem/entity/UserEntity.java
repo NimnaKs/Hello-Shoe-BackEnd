@@ -25,6 +25,7 @@ import java.util.Set;
 public class UserEntity implements UserDetails {
     @Id
     private String id;
+    @Column(unique = true)
     private String email;
     private String password;
     private Role role;
