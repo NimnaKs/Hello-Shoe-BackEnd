@@ -71,4 +71,24 @@ public class ConversionData {
     public List<GenderDTO> convertToGenderDTO(List<GenderEntity> genderEntities) {
         return modelMapper.map(genderEntities,List.class);
     }
+
+    public OccasionEntity toOccasionEntity(OccasionDTO occasionDTO) {
+        return modelMapper.map(occasionDTO,OccasionEntity.class);
+    }
+
+    public OccasionDTO toOccasionDTO(OccasionEntity occasionEntity){
+        return modelMapper.map(occasionEntity, OccasionDTO.class);
+    }
+
+    public List<OccasionDTO> convertToOccasionDTO(List<OccasionEntity> occasionEntities) {
+        return modelMapper.map(occasionEntities,List.class);
+    }
+
+    public VarietyEntity toVarietyEntity(VarietyDTO varietyDTO) {
+        return modelMapper.map(varietyDTO,VarietyEntity.class);
+    }
+
+    public List<VarietyDTO> convertToVarietyDTO(List<VarietyEntity> all) {
+        return modelMapper.map(all,List.class);
+    }
 }
