@@ -39,7 +39,7 @@ public class VarietyServiceIMPL implements VarietyService {
 
     @Override
     public void updateVariety(String id, VarietyDTO varietyDTO) {
-        if (varietyServiceDao.existsById(id)) throw new NotFoundException("Variety Not Found");
+        if (!varietyServiceDao.existsById(id)) throw new NotFoundException("Variety Not Found");
         varietyServiceDao.save(conversionData.toVarietyEntity(varietyDTO));
     }
 }

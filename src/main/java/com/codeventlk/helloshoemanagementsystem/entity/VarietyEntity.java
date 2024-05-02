@@ -1,11 +1,13 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table (name = "Variety")
+@Data
 public class VarietyEntity {
     @Id
     private String varietyCode;

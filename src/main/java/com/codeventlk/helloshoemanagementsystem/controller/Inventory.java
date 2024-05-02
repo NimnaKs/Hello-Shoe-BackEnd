@@ -177,7 +177,7 @@ public class Inventory {
         }
     }
 
-    @GetMapping("/occasionGetAll")
+    @GetMapping("/varietyGetAll")
     public ResponseEntity<?> getAllVariety(){
         try {
             return ResponseEntity.ok(varietyService.getAllVariety());
@@ -188,7 +188,7 @@ public class Inventory {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/occasionDelete")
+    @DeleteMapping("/varietyDelete")
     public ResponseEntity<String> deleteVariety(@RequestParam String id){
         try {
             varietyService.deleteVariety(id);
@@ -202,7 +202,7 @@ public class Inventory {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @PutMapping("/occasionUpdate")
+    @PutMapping("/varietyUpdate")
     public ResponseEntity<String> updateVariety(@Validated @RequestBody VarietyDTO varietyDTO,
                                                  BindingResult bindingResult,
                                                  @RequestParam ("id") String id) {
