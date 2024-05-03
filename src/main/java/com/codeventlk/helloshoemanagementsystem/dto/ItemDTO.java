@@ -5,9 +5,15 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ItemDTO implements SuperDTO{
-    @Null(message = "Item code generate by the program")
+    @Null(message = "Item generate by program")
     private String itemCode;
     @NotBlank(message = "Item Description cannot be blank")
     private String itemDesc;
@@ -15,25 +21,7 @@ public class ItemDTO implements SuperDTO{
     private String pic;
     @NotNull(message = "Status cannot be null")
     private Status status;
-    @NotNull(message = "Category cannot be null")
-    private String category;
-    @NotBlank(message = "Supplier code cannot be blank")
-    private String supplierCode;
-
-    @NotNull(message = "Unit Price Sale cannot be null.")
-    @PositiveOrZero(message = "Unit Price Sale cannot be negative.")
-    private Double unitPriceSale;
-
-    @NotNull(message = "Unit Price Buy cannot be null.")
-    @PositiveOrZero(message = "Unit Price Buy cannot be negative.")
-    private Double unitPriceBuy;
-
-    @NotNull(message = "Expected Profit Sale cannot be null.")
-    @PositiveOrZero(message = "Expected Profit Sale cannot be negative.")
-    private Double expectedProfit;
-
-    @NotNull(message = "Profit Margin cannot be null.")
-    @PositiveOrZero(message = "profit Margin cannot be negative.")
-    private Double profitMargin;
-
+    private String genderCode;
+    private String occasionCode;
+    private String varietyCode;
 }

@@ -2,15 +2,18 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "Item")
+@Data
 public class ItemEntity {
     @Id
     private String itemCode;
     private String itemDesc;
+    @Column(columnDefinition = "LONGTEXT")
     private String pic;
     @Enumerated(EnumType.STRING)
     private Status status;

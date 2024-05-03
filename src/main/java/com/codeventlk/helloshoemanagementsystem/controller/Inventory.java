@@ -1,21 +1,26 @@
 package com.codeventlk.helloshoemanagementsystem.controller;
 
-import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
+import com.codeventlk.helloshoemanagementsystem.Enum.Status;
+import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.dto.GenderDTO;
+import com.codeventlk.helloshoemanagementsystem.dto.ItemDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.OccasionDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.VarietyDTO;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.GenderService;
-import com.codeventlk.helloshoemanagementsystem.service.InventoryService;
+import com.codeventlk.helloshoemanagementsystem.service.ItemService;
 import com.codeventlk.helloshoemanagementsystem.service.OccasionService;
 import com.codeventlk.helloshoemanagementsystem.service.VarietyService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
@@ -24,6 +29,7 @@ public class Inventory {
     private final GenderService genderService;
     private final OccasionService occasionService;
     private final VarietyService varietyService;
+    private final ItemService itemService;
 
     @GetMapping("/health")
     public String healthCheck(){
@@ -219,6 +225,39 @@ public class Inventory {
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Variety Details Updated Unsuccessfully.\nMore Reason\n"+exception);
+        }
+
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> saveItem(@Valid
+                                      @RequestPart ("itemDesc") String itemDesc,
+                                      @RequestPart ("pic") String pic,
+                                      @RequestPart ("status") String status,
+                                      @RequestPart ("genderCode") String genderCode,
+                                      @RequestPart ("occasionCode") String occasionCode,
+                                      @RequestPart ("varietyCode") String varietyCode,
+                                      Errors errors){
+        if (errors.hasFieldErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    errors.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setItemDesc(itemDesc);
+        itemDTO.setPic(UtilMatters.convertBase64(pic));
+        itemDTO.setStatus(Status.valueOf(status));
+        itemDTO.setGenderCode(genderCode);
+        itemDTO.setOccasionCode(occasionCode);
+        itemDTO.setVarietyCode(varietyCode);
+
+        try {
+            itemService.saveItem(itemDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Item Details saved Successfully.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Item saved Unsuccessfully.\nMore Details\n"+exception);
         }
 
     }
