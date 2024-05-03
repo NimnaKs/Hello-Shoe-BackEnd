@@ -12,6 +12,7 @@ import com.codeventlk.helloshoemanagementsystem.repository.OccasionServiceDao;
 import com.codeventlk.helloshoemanagementsystem.repository.VarietyServiceDao;
 import com.codeventlk.helloshoemanagementsystem.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +21,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ItemServiceIMPL implements ItemService {
     private final ItemServiceDao itemServiceDao;
     private final ConversionData conversionData;
@@ -50,19 +52,23 @@ public class ItemServiceIMPL implements ItemService {
 
     private String generateItemCode(ItemDTO itemDTO) {
 
-        String prefix = itemDTO.getGenderCode() != null
-                ? itemDTO.getGenderCode()
-                : itemDTO.getOccasionCode() != null
-                ? itemDTO.getOccasionCode()
-                : itemDTO.getVarietyCode();
+        StringBuilder prefixBuilder = new StringBuilder();
+        if (itemDTO.getGenderCode() != null) {
+            prefixBuilder.append(itemDTO.getGenderCode());
+        }
+        if (itemDTO.getOccasionCode() != null) {
+            prefixBuilder.append(itemDTO.getOccasionCode());
+        }
+        if (itemDTO.getVarietyCode() != null) {
+            prefixBuilder.append(itemDTO.getVarietyCode());
+        }
+        String prefix = prefixBuilder.toString();
 
         String lastItemCodeStartingWithPrefix =
                 itemServiceDao.findLastItemCodeStartingWithPrefix(prefix);
 
         return (lastItemCodeStartingWithPrefix != null)
-                ? String.format(prefix+"%05d",
-                Integer.parseInt(lastItemCodeStartingWithPrefix.
-                        replace(prefix, "")) + 1)
-                : prefix+"00001";
+                ? String.format("%s%05d", prefix, Integer.parseInt(lastItemCodeStartingWithPrefix.replace(prefix, "")) + 1)
+                : prefix + "00001";
     }
 }
