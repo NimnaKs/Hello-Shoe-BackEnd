@@ -2,6 +2,7 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Null;
 import lombok.Data;
 
 import java.util.List;
@@ -15,18 +16,16 @@ public class ItemEntity {
     private String itemDesc;
     @Column(columnDefinition = "LONGTEXT")
     private String pic;
-    @Enumerated(EnumType.STRING)
-    private Status status;
     @ManyToOne
-    @JoinColumn(name = "genderCode",nullable = false)
+    @JoinColumn(name = "genderCode",nullable = true)
     private GenderEntity genderEntity;
 
     @ManyToOne
-    @JoinColumn(name = "occasionCode",nullable = false)
+    @JoinColumn(name = "occasionCode",nullable = true)
     private OccasionEntity occasionEntity;
 
     @ManyToOne
-    @JoinColumn(name = "varietyCode",nullable = false)
+    @JoinColumn(name = "varietyCode",nullable = true)
     private VarietyEntity varietyEntity;
 
     @OneToMany(mappedBy = "itemEntity",cascade = CascadeType.ALL)

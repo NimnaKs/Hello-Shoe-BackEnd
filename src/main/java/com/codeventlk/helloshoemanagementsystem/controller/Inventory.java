@@ -2,13 +2,10 @@ package com.codeventlk.helloshoemanagementsystem.controller;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
-import com.codeventlk.helloshoemanagementsystem.dto.GenderDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.ItemDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.OccasionDTO;
-import com.codeventlk.helloshoemanagementsystem.dto.VarietyDTO;
+import com.codeventlk.helloshoemanagementsystem.dto.*;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.GenderService;
-import com.codeventlk.helloshoemanagementsystem.service.ItemService;
+import com.codeventlk.helloshoemanagementsystem.service.InventoryService;
 import com.codeventlk.helloshoemanagementsystem.service.OccasionService;
 import com.codeventlk.helloshoemanagementsystem.service.VarietyService;
 import jakarta.validation.Valid;
@@ -29,7 +26,7 @@ public class Inventory {
     private final GenderService genderService;
     private final OccasionService occasionService;
     private final VarietyService varietyService;
-    private final ItemService itemService;
+    private final InventoryService itemService;
 
     @GetMapping("/health")
     public String healthCheck(){
@@ -234,10 +231,9 @@ public class Inventory {
     public ResponseEntity<?> saveItem(@Valid
                                       @RequestPart ("itemDesc") String itemDesc,
                                       @RequestPart ("pic") String pic,
-                                      @RequestPart ("status") String status,
-                                      @RequestPart ("genderCode") String genderCode,
-                                      @RequestPart ("occasionCode") String occasionCode,
-                                      @RequestPart ("varietyCode") String varietyCode,
+                                      @RequestParam(value = "genderCode", required = false, defaultValue = "-1") String genderCode,
+                                      @RequestParam(value = "occasionCode", required = false, defaultValue = "-1") String occasionCode,
+                                      @RequestParam(value = "varietyCode", required = false, defaultValue = "-1") String varietyCode,
                                       Errors errors){
         if (errors.hasFieldErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -247,7 +243,6 @@ public class Inventory {
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setItemDesc(itemDesc);
         itemDTO.setPic(UtilMatters.convertBase64(pic));
-        itemDTO.setStatus(Status.valueOf(status));
         itemDTO.setGenderCode(genderCode);
         itemDTO.setOccasionCode(occasionCode);
         itemDTO.setVarietyCode(varietyCode);
@@ -261,4 +256,57 @@ public class Inventory {
         }
 
     }
+
+    @GetMapping(value = "/{id}",produces = "application/json")
+    public ResponseEntity<?> getItem(@PathVariable ("id") String id){
+        try {
+            return ResponseEntity.ok(itemService.getItem(id));
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Item Details fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<String> deleteItem(@PathVariable ("id") String id){
+        try {
+            itemService.deleteItem(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Item Details deleted Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Item Details deleted Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping(value = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateItem(@Valid
+                                                 @RequestPart ("itemDesc") String itemDesc,
+                                                 @RequestPart ("pic") String pic,
+                                                 @PathVariable ("id") String id,
+                                                 Errors errors) {
+
+        if (errors.hasFieldErrors()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    errors.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        try {
+            pic = UtilMatters.convertBase64(pic);
+            itemService.updateItem(id,itemDesc,pic);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Item Details Updated Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Item Details Updated Unsuccessfully.\nMore Reason\n"+exception);
+        }
+
+    }
+
 }

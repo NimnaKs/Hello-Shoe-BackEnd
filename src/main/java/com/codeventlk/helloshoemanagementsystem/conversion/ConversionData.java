@@ -95,4 +95,8 @@ public class ConversionData {
     public ItemEntity toItemEntity(ItemDTO itemDTO){
         return modelMapper.map(itemDTO, ItemEntity.class);
     }
+
+    public ItemDTO toItemDTO(Optional<ItemEntity> itemEntity) {
+        return modelMapper.map(itemEntity, ItemDTO.class);
+    }
 }
