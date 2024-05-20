@@ -99,4 +99,8 @@ public class ConversionData {
     public ItemDTO toItemDTO(Optional<ItemEntity> itemEntity) {
         return modelMapper.map(itemEntity, ItemDTO.class);
     }
+
+    public BranchEntity toBranchEntity(BranchDTO branchDTO) {
+        return modelMapper.map(branchDTO, BranchEntity.class);
+    }
 }
