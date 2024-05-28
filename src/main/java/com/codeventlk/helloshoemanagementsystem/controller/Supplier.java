@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/supplier")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:63342")
 public class Supplier {
     final private SupplierService supplierService;
 
@@ -94,5 +95,15 @@ public class Supplier {
                     body("Internal server error | Supplier Details Updated Unsuccessfully.\nMore Reason\n"+exception);
         }
 
+    }
+
+    @GetMapping("/nextSupId")
+    public ResponseEntity<?> getSupplierId() {
+        try {
+            return ResponseEntity.ok(supplierService.getSupplierId());
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Supplier Id fetched Unsuccessfully.\nMore Reason\n" + exception);
+        }
     }
 }

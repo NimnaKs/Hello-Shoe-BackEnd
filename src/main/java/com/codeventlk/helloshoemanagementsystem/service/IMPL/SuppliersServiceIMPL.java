@@ -66,6 +66,12 @@ public class SuppliersServiceIMPL implements SupplierService {
         supplierEntity.setContactNo2(supplierDTO.getContactNo2());
         supplierEntity.setEmail(supplierDTO.getEmail());
     }
+
+    @Override
+    public String getSupplierId() {
+        return getNextSupplierId();
+    }
+
     private String getNextSupplierId() {
         SupplierEntity firstByOrderBySupplierCode = supplierServiceDao.findFirstByOrderBySupplierCode();
         return (firstByOrderBySupplierCode != null)
