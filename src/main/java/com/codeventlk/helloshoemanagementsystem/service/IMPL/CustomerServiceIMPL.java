@@ -11,6 +11,9 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,8 @@ public class CustomerServiceIMPL implements CustomerService {
         customerDTO.setCustomerId(getNextCustomerId());
         customerDTO.setLevel(Level.NEW);
         customerDTO.setTotalPoint(0);
+        customerDTO.setJoinDate(new Date());
+        /*customerDTO.setRecentPurchasedDate(new Timestamp(System.currentTimeMillis()));*/
         CustomerEntity customerEntity = conversionData.convertToCustomerEntity(Optional.of(customerDTO));
         customerServiceDao.save(customerEntity);
     }
@@ -54,7 +59,7 @@ public class CustomerServiceIMPL implements CustomerService {
         if (customerEntity.isEmpty()) throw new NotFoundException("Customer Not Found");
         customerEntity.get().setCustomerName(customerDTO.getCustomerName());
         customerEntity.get().setGender(customerDTO.getGender());
-        customerEntity.get().setJoinDate(customerDTO.getJoinDate());
+       /* customerEntity.get().setJoinDate(customerDTO.getJoinDate());*/
         customerEntity.get().setDob(customerDTO.getDob());
         customerEntity.get().setAddress1(customerDTO.getAddress1());
         customerEntity.get().setAddress2(customerDTO.getAddress2());
@@ -63,7 +68,12 @@ public class CustomerServiceIMPL implements CustomerService {
         customerEntity.get().setPostalCode(customerDTO.getPostalCode());
         customerEntity.get().setContactNo(customerDTO.getContactNo());
         customerEntity.get().setEmail(customerDTO.getEmail());
-        customerEntity.get().setRecentPurchasedDate(customerDTO.getRecentPurchasedDate());
+        /*customerEntity.get().setRecentPurchasedDate(customerDTO.getRecentPurchasedDate());*/
+    }
+
+    @Override
+    public String getCustomerId() {
+        return getNextCustomerId();
     }
 
     private String getNextCustomerId() {
