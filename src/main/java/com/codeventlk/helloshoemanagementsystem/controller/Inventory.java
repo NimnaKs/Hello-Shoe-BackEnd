@@ -4,10 +4,7 @@ import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.dto.*;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
-import com.codeventlk.helloshoemanagementsystem.service.GenderService;
-import com.codeventlk.helloshoemanagementsystem.service.InventoryService;
-import com.codeventlk.helloshoemanagementsystem.service.OccasionService;
-import com.codeventlk.helloshoemanagementsystem.service.VarietyService;
+import com.codeventlk.helloshoemanagementsystem.service.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,17 +19,82 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/api/v1/inventory")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:63342")
 public class Inventory {
     private final GenderService genderService;
     private final OccasionService occasionService;
     private final VarietyService varietyService;
     private final InventoryService itemService;
+    private final SizeService sizeService;
 
     @GetMapping("/health")
     public String healthCheck(){
         return "Inventory Health Check";
     }
 
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping("/sizeSave")
+    public ResponseEntity<?> saveSize(@Validated @RequestBody SizeDTO sizeDTO,
+                                        BindingResult bindingResult){
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        try {
+            sizeService.saveSize(sizeDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Gender Details saved Successfully.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Gender saved Unsuccessfully.\nMore Details\n"+exception);
+        }
+    }
+
+    @GetMapping("/sizeGetAll")
+    public ResponseEntity<?> getAllSizes(){
+        try {
+            return ResponseEntity.ok(sizeService.getAllSizes());
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Size Details fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/sizeDelete")
+    public ResponseEntity<String> deleteSize(@RequestParam String id){
+        try {
+            sizeService.deleteSize(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Size Details deleted Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Size not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Size Details deleted Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/sizeUpdate")
+    public ResponseEntity<String> updateSize(@Validated @RequestBody SizeDTO sizeDTO,
+                                               BindingResult bindingResult,
+                                               @RequestParam ("id") String id) {
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).
+                    body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        try {
+            sizeService.updateSize(id,sizeDTO);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Size Details Updated Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Size not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Size Details Gender Unsuccessfully.\nMore Reason\n"+exception);
+        }
+
+    }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/genderSave")
     public ResponseEntity<?> saveGender(@Validated @RequestBody GenderDTO genderDTO,
@@ -307,6 +369,16 @@ public class Inventory {
                     body("Internal server error | Item Details Updated Unsuccessfully.\nMore Reason\n"+exception);
         }
 
+    }
+
+    @GetMapping("/nextSizeId")
+    public ResponseEntity<?> getSizeId(){
+        try {
+            return ResponseEntity.ok(sizeService.getSizeId());
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Size Id fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
     }
 
 }

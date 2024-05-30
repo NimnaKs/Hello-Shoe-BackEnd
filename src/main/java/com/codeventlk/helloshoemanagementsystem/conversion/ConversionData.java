@@ -103,4 +103,12 @@ public class ConversionData {
     public BranchEntity toBranchEntity(BranchDTO branchDTO) {
         return modelMapper.map(branchDTO, BranchEntity.class);
     }
+
+    public SizeEntity toSizeEntity(SizeDTO sizeDTO) {
+        return modelMapper.map(sizeDTO, SizeEntity.class);
+    }
+
+    public List<SizeDTO> convertToSizeDTOs(List<SizeEntity> sizeEntities) {
+        return modelMapper.map(sizeEntities, List.class);
+    }
 }
