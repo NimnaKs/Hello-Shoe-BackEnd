@@ -1,5 +1,6 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,6 +19,7 @@ public class GenderEntity {
     @Id
     private String genderCode;
     private String genderDesc;
+    @JsonIgnore
     @OneToMany(mappedBy = "genderEntity",cascade = CascadeType.ALL)
     private List<ItemEntity> itemEntities;
 

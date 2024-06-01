@@ -111,4 +111,8 @@ public class ConversionData {
     public List<SizeDTO> convertToSizeDTOs(List<SizeEntity> sizeEntities) {
         return modelMapper.map(sizeEntities, List.class);
     }
+
+    public List<ItemDTO> toItemDtos(List<ItemEntity> all) {
+        return modelMapper.map(all, List.class);
+    }
 }

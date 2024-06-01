@@ -16,6 +16,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/inventory")
 @AllArgsConstructor
@@ -304,7 +306,7 @@ public class Inventory {
 
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setItemDesc(itemDesc);
-        itemDTO.setPic(UtilMatters.convertBase64(pic));
+        itemDTO.setPic(pic);
         itemDTO.setGenderCode(genderCode);
         itemDTO.setOccasionCode(occasionCode);
         itemDTO.setVarietyCode(varietyCode);
@@ -326,6 +328,16 @@ public class Inventory {
         } catch (NotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found.");
         } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Item Details fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @GetMapping("/getAllItems")
+    public ResponseEntity<?> getAllItems(){
+        try {
+            return ResponseEntity.ok(itemService.getAllItems());
+        }catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Item Details fetched Unsuccessfully.\nMore Reason\n"+exception);
         }
@@ -359,7 +371,6 @@ public class Inventory {
         }
 
         try {
-            pic = UtilMatters.convertBase64(pic);
             itemService.updateItem(id,itemDesc,pic);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Item Details Updated Successfully.");
         } catch (NotFoundException exception) {

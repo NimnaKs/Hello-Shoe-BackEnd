@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -65,12 +66,22 @@ public class InventoryServiceIMPL implements InventoryService {
 
     @Override
     public void updateItem(String id, String itemDesc, String pic) {
-        if(!itemServiceDao.existsById(id)){throw new NotFoundException("Item not found.");}
-        ItemEntity itemEntity = new ItemEntity();
-        itemEntity.setItemCode(id);
+        Optional<ItemEntity> itemEntityOptional = itemServiceDao.findById(id);
+        if (itemEntityOptional.isEmpty()) {
+            throw new NotFoundException("Item not found.");
+        }
+
+        ItemEntity itemEntity = itemEntityOptional.get();
         itemEntity.setItemDesc(itemDesc);
         itemEntity.setPic(pic);
+
         itemServiceDao.save(itemEntity);
+    }
+
+
+    @Override
+    public List<ItemDTO> getAllItems() {
+        return conversionData.toItemDtos(itemServiceDao.findAll());
     }
 
     private String generateItemCode(ItemDTO itemDTO) {
