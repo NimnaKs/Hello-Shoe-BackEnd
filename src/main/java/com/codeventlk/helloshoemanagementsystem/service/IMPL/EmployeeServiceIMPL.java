@@ -2,9 +2,11 @@ package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 
 import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
 import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
+import com.codeventlk.helloshoemanagementsystem.entity.BranchEntity;
 import com.codeventlk.helloshoemanagementsystem.entity.EmployeeEntity;
 import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
+import com.codeventlk.helloshoemanagementsystem.repository.BranchServiceDao;
 import com.codeventlk.helloshoemanagementsystem.repository.EmployeeServiceDao;
 import com.codeventlk.helloshoemanagementsystem.repository.UserServiceDao;
 import com.codeventlk.helloshoemanagementsystem.service.EmployeeService;
@@ -23,6 +25,7 @@ public class EmployeeServiceIMPL implements EmployeeService {
     private final EmployeeServiceDao employeeServiceDao;
     private final UserServiceDao userServiceDao;
     private final ConversionData conversionData;
+    private final BranchServiceDao branchServiceDao;
     @Override
     public void saveEmployee(EmployeeDTO employeeDTO) {
         employeeDTO.setEmployeeCode(getNextEmployeeCode());
@@ -31,8 +34,15 @@ public class EmployeeServiceIMPL implements EmployeeService {
         String email = employeeDTO.getEmail();
         Optional<UserEntity> byEmail = userServiceDao.findByEmail(email);
 
+        String branchId = employeeDTO.getBranchId();
+        Optional<BranchEntity> byBranch = branchServiceDao.findById(branchId);
+
         if (byEmail == null) {
             throw new NotFoundException("User Not Found");
+        }
+
+        if (byBranch == null){
+            throw new NotFoundException("Branch Not Found");
         }
 
         UserEntity newUserEntity = new UserEntity();
@@ -42,6 +52,7 @@ public class EmployeeServiceIMPL implements EmployeeService {
         newUserEntity.setRole(byEmail.get().getRole());
 
         employeeEntity.setUserEntity(newUserEntity);
+        employeeEntity.setBranch(byBranch.get());
 
         employeeServiceDao.save(employeeEntity);
     }
@@ -69,7 +80,6 @@ public class EmployeeServiceIMPL implements EmployeeService {
         employee.setDesignation(employeeDTO.getDesignation());
         employee.setDateOfBirth(employeeDTO.getDateOfBirth());
         employee.setDateOfJoin(employeeDTO.getDateOfJoin());
-        employee.setAttachedBranch(employeeDTO.getAttachedBranch());
         employee.setAddress1(employeeDTO.getAddress1());
         employee.setAddress2(employeeDTO.getAddress2());
         employee.setAddress3(employeeDTO.getAddress3());

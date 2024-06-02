@@ -17,7 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/v1/auth/")
+@RequestMapping("api/v1/auth")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:63342")
 public class User {
@@ -63,5 +63,16 @@ public class User {
         }
     }
 
+    @GetMapping(produces = "application/json")
+    public ResponseEntity<?> getBranches(){
+        try {
+            return ResponseEntity.ok(branchService.getAllBranches());
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Branches not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Branches Details fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
 
 }

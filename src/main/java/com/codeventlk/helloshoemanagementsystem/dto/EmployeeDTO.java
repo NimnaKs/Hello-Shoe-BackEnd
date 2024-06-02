@@ -33,8 +33,8 @@ public class EmployeeDTO implements SuperDTO{
     @NotNull(message = "Join date cannot be null")
     @PastOrPresent(message = "Join date must be in the past or present")
     private Date dateOfJoin;
-    @NotBlank(message = "Attached Branch cannot be blank")
-    private String attachedBranch;
+    @Null
+    private String branchId;
     @NotBlank(message = "Address 1 cannot be blank")
     private String address1;
     @NotBlank(message = "Address 2 cannot be blank")

@@ -40,7 +40,7 @@ public class Employee {
                                           @RequestPart ("status") String status,
                                           @RequestPart ("designation") String designation,
                                           @RequestPart ("dateOfBirth") String dateOfBirth,
-                                          @RequestPart ("attachedBranch") String attachedBranch,
+                                          @RequestPart ("attachedBranch") String branchId,
                                           @RequestPart ("address1") String address1,
                                           @RequestPart ("address2") String address2,
                                           @RequestPart ("address3") String address3,
@@ -64,7 +64,7 @@ public class Employee {
         employeeDTO.setStatus(Status.valueOf(status));
         employeeDTO.setDesignation(designation);
         employeeDTO.setDateOfBirth(Date.valueOf(dateOfBirth));
-        employeeDTO.setAttachedBranch(attachedBranch);
+        employeeDTO.setBranchId(branchId);
         employeeDTO.setAddress1(address1);
         employeeDTO.setAddress2(address2);
         employeeDTO.setAddress3(address3);
@@ -119,7 +119,7 @@ public class Employee {
                                           @RequestPart ("status") String status,
                                           @RequestPart ("designation") String designation,
                                           @RequestPart ("dateOfBirth") String dateOfBirth,
-                                          @RequestPart ("attachedBranch") String attachedBranch,
+                                          @RequestPart ("attachedBranch") String branchId,
                                           @RequestPart ("address1") String address1,
                                           @RequestPart ("address2") String address2,
                                           @RequestPart ("address3") String address3,
@@ -143,7 +143,7 @@ public class Employee {
         employeeDTO.setStatus(Status.valueOf(status));
         employeeDTO.setDesignation(designation);
         employeeDTO.setDateOfBirth(Date.valueOf(dateOfBirth));
-        employeeDTO.setAttachedBranch(attachedBranch);
+        employeeDTO.setBranchId(branchId);
         employeeDTO.setAddress1(address1);
         employeeDTO.setAddress2(address2);
         employeeDTO.setAddress3(address3);

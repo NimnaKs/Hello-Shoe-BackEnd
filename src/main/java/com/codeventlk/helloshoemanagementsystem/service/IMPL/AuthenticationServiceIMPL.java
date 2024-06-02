@@ -2,6 +2,7 @@ package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 
 import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
+import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.UserDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.UserEntity;
 import com.codeventlk.helloshoemanagementsystem.repository.UserServiceDao;
@@ -9,6 +10,7 @@ import com.codeventlk.helloshoemanagementsystem.secureAndResponse.response.JwtAu
 import com.codeventlk.helloshoemanagementsystem.secureAndResponse.secure.SignIn;
 import com.codeventlk.helloshoemanagementsystem.secureAndResponse.secure.SignUp;
 import com.codeventlk.helloshoemanagementsystem.service.AuthenticationService;
+import com.codeventlk.helloshoemanagementsystem.service.EmployeeService;
 import com.codeventlk.helloshoemanagementsystem.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -21,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AuthenticationServiceIMPL implements AuthenticationService {
 
@@ -30,6 +31,7 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
+    private final EmployeeService employeeService;
     @Override
     public JwtAuthResponse signUp(SignUp signUp) {
         UserDTO userDTO = UserDTO.builder()
@@ -39,6 +41,11 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
                 .role(signUp.getRole())
                 .build();
         UserEntity saveUser = userDao.save(conversionData.toUserEntity(userDTO));
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setEmail(signUp.getEmail());
+        employeeDTO.setDesignation((signUp.getRole().equals("ADMIN")) ?"Manager":null);
+        employeeDTO.setBranchId(signUp.getBranchId());
+        employeeService.saveEmployee(employeeDTO);
         String generateToken = jwtService.generateToken(saveUser);
         return JwtAuthResponse.builder().token(generateToken).build();
     }

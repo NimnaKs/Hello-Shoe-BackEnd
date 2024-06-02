@@ -13,8 +13,6 @@ public class StockSizeEntity {
     private int qty;
     private Double unitBuyingPrice;
     private Double unitSellingPrice;
-    private Double profit;
-    private Double profitMargin;
 
     @ManyToOne
     @JoinColumn(name = "stockId",nullable = false)

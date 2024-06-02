@@ -26,7 +26,6 @@ public class EmployeeEntity {
     private Date dateOfBirth;
     @Temporal(TemporalType.DATE)
     private Date dateOfJoin;
-    private String attachedBranch;
     private String address1;
     private String address2;
     private String address3;
@@ -38,4 +37,8 @@ public class EmployeeEntity {
     private String emergencyContact;
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity userEntity;
+    @ManyToOne
+    @JoinColumn(name = "branchId", nullable = true)
+    private BranchEntity branch;
+
 }

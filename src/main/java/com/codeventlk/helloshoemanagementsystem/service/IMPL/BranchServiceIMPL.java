@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -24,5 +26,10 @@ public class BranchServiceIMPL implements BranchService {
         if (!branchDTO.getProductCode().equals(UtilMatters.productActivationCode())) throw new InvalidException("Invalid Product Code");
         branchDTO.setBranchId(UtilMatters.generateId());
         branchServiceDao.save(conversionData.toBranchEntity(branchDTO));
+    }
+
+    @Override
+    public List<BranchDTO> getAllBranches() {
+        return conversionData.toBranchDTOs(branchServiceDao.findAll());
     }
 }
