@@ -1,5 +1,6 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -13,6 +14,4 @@ public class BranchEntity {
     private String branchId;
     @Column(unique = true)
     private String branchName;
-    @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<EmployeeEntity> employees;
 }

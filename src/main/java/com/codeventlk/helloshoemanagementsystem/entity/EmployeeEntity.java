@@ -2,21 +2,21 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Gender;
 import com.codeventlk.helloshoemanagementsystem.Enum.Status;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.sql.Date;
-import java.util.List;
 
 @Entity
-@Table (name = "Employee")
+@Table(name = "Employee")
 @Data
 public class EmployeeEntity {
     @Id
     private String employeeCode;
     private String employeeName;
     @Column(columnDefinition = "LONGTEXT")
-    private String profilePic;
+    private String pic;
     @Enumerated(EnumType.STRING)
     private Gender gender;
     @Enumerated(EnumType.STRING)
@@ -35,10 +35,14 @@ public class EmployeeEntity {
     private String email;
     private String emergencyContactName;
     private String emergencyContact;
+
+    @JsonManagedReference
     @OneToOne(cascade = CascadeType.ALL)
     private UserEntity userEntity;
+
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "branchId", nullable = true)
     private BranchEntity branch;
-
+    
 }

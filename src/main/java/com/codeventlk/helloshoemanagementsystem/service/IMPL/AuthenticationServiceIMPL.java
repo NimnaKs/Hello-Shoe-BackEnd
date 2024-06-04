@@ -1,5 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 
+import com.codeventlk.helloshoemanagementsystem.Enum.Role;
+import com.codeventlk.helloshoemanagementsystem.Enum.Status;
 import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
 import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
@@ -20,6 +22,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Service
@@ -43,8 +47,10 @@ public class AuthenticationServiceIMPL implements AuthenticationService {
         UserEntity saveUser = userDao.save(conversionData.toUserEntity(userDTO));
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setEmail(signUp.getEmail());
-        employeeDTO.setDesignation((signUp.getRole().equals("ADMIN")) ?"Manager":null);
+        employeeDTO.setDesignation((signUp.getRole().equals(Role.ADMIN)) ?"Manager":null);
         employeeDTO.setBranchId(signUp.getBranchId());
+        employeeDTO.setStatus(Status.LOW);
+        employeeDTO.setDateOfJoin(Date.valueOf(LocalDate.now()));
         employeeService.saveEmployee(employeeDTO);
         String generateToken = jwtService.generateToken(saveUser);
         return JwtAuthResponse.builder().token(generateToken).build();

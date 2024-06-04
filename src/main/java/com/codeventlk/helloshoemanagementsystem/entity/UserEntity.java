@@ -1,6 +1,7 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,7 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
     private Role role;
+    @JsonIgnore
     @OneToMany (mappedBy = "userEntity",cascade = CascadeType.ALL)
     private List<OrderEntity> orderEntities;
 

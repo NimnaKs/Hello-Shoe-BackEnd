@@ -2,6 +2,7 @@ package com.codeventlk.helloshoemanagementsystem.controller;
 
 import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
+import com.codeventlk.helloshoemanagementsystem.service.StockService;
 import com.codeventlk.helloshoemanagementsystem.service.SupplierService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:63342")
 public class Supplier {
     final private SupplierService supplierService;
+    final private StockService stockService;
 
     @GetMapping("/health")
     public String healthCheck(){return "Supplier Health Check";}
@@ -104,6 +106,16 @@ public class Supplier {
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Supplier Id fetched Unsuccessfully.\nMore Reason\n" + exception);
+        }
+    }
+
+    @GetMapping("/nextStockId")
+    public ResponseEntity<?> getStockId(){
+        try {
+            return ResponseEntity.ok(stockService.getStockId());
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Stock Id fetched Unsuccessfully.\nMore Reason\n" + exception);
         }
     }
 }

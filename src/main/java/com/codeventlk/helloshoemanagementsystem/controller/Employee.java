@@ -23,6 +23,7 @@ import java.sql.Date;
 @RestController
 @RequestMapping("/api/v1/employee")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:63342")
 public class Employee {
 
     private final EmployeeService employeeService;
@@ -59,7 +60,7 @@ public class Employee {
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setEmployeeName(employeeName);
-        employeeDTO.setProfilePic(UtilMatters.convertBase64(profilePic));
+        employeeDTO.setPic(UtilMatters.convertBase64(profilePic));
         employeeDTO.setGender(Gender.valueOf(gender));
         employeeDTO.setStatus(Status.valueOf(status));
         employeeDTO.setDesignation(designation);
@@ -100,6 +101,7 @@ public class Employee {
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getEmployee(){
         try {
+            System.out.println(employeeService.getAllEmployee());
             return ResponseEntity.ok(employeeService.getAllEmployee());
         } catch (NotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employees not found.");
@@ -119,17 +121,14 @@ public class Employee {
                                           @RequestPart ("status") String status,
                                           @RequestPart ("designation") String designation,
                                           @RequestPart ("dateOfBirth") String dateOfBirth,
-                                          @RequestPart ("attachedBranch") String branchId,
                                           @RequestPart ("address1") String address1,
                                           @RequestPart ("address2") String address2,
                                           @RequestPart ("address3") String address3,
                                           @RequestPart ("address4") String address4,
                                           @RequestPart ("postalCode") String postalCode,
                                           @RequestPart ("contactNo") String contactNo,
-                                          @RequestPart ("email") String email,
                                           @RequestPart ("emergencyContactName") String emergencyContactName,
                                           @RequestPart ("emergencyContact") String emergencyContact,
-                                          @RequestPart ("dateOfJoin") String dateOfJoin,
                                           Errors errors) {
         if (errors.hasFieldErrors()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
@@ -138,22 +137,19 @@ public class Employee {
 
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setEmployeeName(employeeName);
-        employeeDTO.setProfilePic(UtilMatters.convertBase64(profilePic));
+        employeeDTO.setPic(profilePic);
         employeeDTO.setGender(Gender.valueOf(gender));
         employeeDTO.setStatus(Status.valueOf(status));
         employeeDTO.setDesignation(designation);
         employeeDTO.setDateOfBirth(Date.valueOf(dateOfBirth));
-        employeeDTO.setBranchId(branchId);
         employeeDTO.setAddress1(address1);
         employeeDTO.setAddress2(address2);
         employeeDTO.setAddress3(address3);
         employeeDTO.setAddress4(address4);
         employeeDTO.setPostalCode(postalCode);
         employeeDTO.setContactNo(contactNo);
-        employeeDTO.setEmail(email);
         employeeDTO.setEmergencyContact(emergencyContact);
         employeeDTO.setEmergencyContactName(emergencyContactName);
-        employeeDTO.setDateOfJoin(Date.valueOf(dateOfJoin));
 
         try {
             employeeService.updateEmployee(id,employeeDTO);
