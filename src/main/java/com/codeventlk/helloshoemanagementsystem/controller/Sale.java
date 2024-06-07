@@ -4,6 +4,7 @@ import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.OrderDTO;
 import com.codeventlk.helloshoemanagementsystem.service.CustomerService;
 import com.codeventlk.helloshoemanagementsystem.service.SaleService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

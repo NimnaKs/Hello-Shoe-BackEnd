@@ -5,6 +5,7 @@ import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.StockService;
 import com.codeventlk.helloshoemanagementsystem.service.SupplierService;
+import jakarta.annotation.security.RolesAllowed;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -66,6 +67,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteSupplier(@PathVariable ("id") String id){
@@ -80,6 +82,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(value = "/{id}",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> updateCustomer(@Validated @RequestBody SupplierDTO supplierDTO,
@@ -112,6 +115,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @GetMapping("/nextStockId")
     public ResponseEntity<?> getStockId(){
         try {
@@ -122,6 +126,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @PostMapping(value = "/saveStock/{email}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> saveStock(@Validated @RequestBody StockDTO stockDTO,
@@ -155,6 +160,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @PutMapping(value = "/updateStock/{stockId}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<?> updateStock(@Validated @RequestBody StockDTO stockDTO,
@@ -179,6 +185,7 @@ public class Supplier {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/deleteStock/{stockId}")
     public ResponseEntity<String> deleteStock(@PathVariable ("stockId") String id){

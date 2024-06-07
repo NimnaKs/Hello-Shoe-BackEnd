@@ -5,6 +5,7 @@ import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
 import com.codeventlk.helloshoemanagementsystem.dto.*;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.*;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -34,6 +35,7 @@ public class Inventory {
         return "Inventory Health Check";
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/sizeSave")
     public ResponseEntity<?> saveSize(@Validated @RequestBody SizeDTO sizeDTO,
@@ -52,6 +54,7 @@ public class Inventory {
         }
     }
 
+
     @GetMapping("/sizeGetAll")
     public ResponseEntity<?> getAllSizes(){
         try {
@@ -62,6 +65,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/sizeDelete")
     public ResponseEntity<String> deleteSize(@RequestParam String id){
@@ -76,6 +80,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/sizeUpdate")
     public ResponseEntity<String> updateSize(@Validated @RequestBody SizeDTO sizeDTO,
@@ -97,6 +102,8 @@ public class Inventory {
         }
 
     }
+
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/genderSave")
     public ResponseEntity<?> saveGender(@Validated @RequestBody GenderDTO genderDTO,
@@ -115,6 +122,7 @@ public class Inventory {
         }
     }
 
+
     @GetMapping("/genderGetAll")
     public ResponseEntity<?> getAllGenders(){
         try {
@@ -125,6 +133,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/genderDelete")
     public ResponseEntity<String> deleteGender(@RequestParam String id){
@@ -139,6 +148,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/genderUpdate")
     public ResponseEntity<String> updateGender(@Validated @RequestBody GenderDTO genderDTO,
@@ -161,6 +171,7 @@ public class Inventory {
 
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/occasionSave")
     public ResponseEntity<?> saveOccasion(@Validated @RequestBody OccasionDTO occasionDTO,
@@ -179,6 +190,7 @@ public class Inventory {
         }
     }
 
+
     @GetMapping("/occasionGetAll")
     public ResponseEntity<?> getAllOccasion(){
         try {
@@ -189,6 +201,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/occasionDelete")
     public ResponseEntity<String> deleteOccasion(@RequestParam String id){
@@ -203,6 +216,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/occasionUpdate")
     public ResponseEntity<String> updateOccasion(@Validated @RequestBody OccasionDTO occasionDTO,
@@ -226,6 +240,7 @@ public class Inventory {
     }
 
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/varietySave")
     public ResponseEntity<?> saveVariety(@Validated @RequestBody VarietyDTO varietyDTO,
@@ -244,6 +259,7 @@ public class Inventory {
         }
     }
 
+
     @GetMapping("/varietyGetAll")
     public ResponseEntity<?> getAllVariety(){
         try {
@@ -254,6 +270,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/varietyDelete")
     public ResponseEntity<String> deleteVariety(@RequestParam String id){
@@ -268,6 +285,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/varietyUpdate")
     public ResponseEntity<String> updateVariety(@Validated @RequestBody VarietyDTO varietyDTO,
@@ -343,6 +361,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<String> deleteItem(@PathVariable ("id") String id){
@@ -357,6 +376,7 @@ public class Inventory {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping(value = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> updateItem(@Valid
@@ -382,6 +402,7 @@ public class Inventory {
 
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @GetMapping("/nextSizeId")
     public ResponseEntity<?> getSizeId(){
         try {

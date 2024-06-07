@@ -7,6 +7,7 @@ import com.codeventlk.helloshoemanagementsystem.dto.CustomerDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.EmployeeDTO;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.EmployeeService;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -110,6 +111,7 @@ public class Employee {
         }
     }
 
+    @RolesAllowed("ROLE_ADMIN")
     @ResponseStatus(HttpStatus.CREATED)
     @PutMapping(value = "/{id}",consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateEmployee(@PathVariable ("id") String id,
