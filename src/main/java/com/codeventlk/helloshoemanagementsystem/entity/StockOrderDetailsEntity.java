@@ -1,12 +1,14 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
-@Table (name = "StockSizeOrderDetails")
-public class StockSizeOrderDetailsEntity {
+@Table (name = "StockOrderDetails")
+@Data
+public class StockOrderDetailsEntity {
     @Id
-    private String stockSizeOrderDetailsId;
+    private String stockOrderDetailsId;
     private int qty;
 
     @ManyToOne

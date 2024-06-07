@@ -11,6 +11,6 @@ public class ReturnEntity {
     private String returnId;
     private Timestamp returnDate;
     @OneToOne(cascade = CascadeType.ALL)
-    private StockSizeOrderDetailsEntity stockSizeOrderDetailsEntity;
+    private StockOrderDetailsEntity stockOrderDetailsEntity;
     private int qty;
 }

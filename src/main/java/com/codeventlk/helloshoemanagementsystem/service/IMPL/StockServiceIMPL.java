@@ -52,6 +52,7 @@ public class StockServiceIMPL implements StockService {
                 stockDTO.getQuantity(),
                 stockDTO.getUnitBuyingPrice(),
                 stockDTO.getUnitSellingPrice(),
+                stockDTO.getQuantity(),
                 supplierServiceDao.findById(stockDTO.getSupplierId()).get(),
                 itemServiceDao.findById(stockDTO.getItemId()).get(),
                 branchEntity,
@@ -71,6 +72,7 @@ public class StockServiceIMPL implements StockService {
         if (stockEntity.isEmpty()) throw new NotFoundException("Stock Not Found");
         StockEntity stock = stockEntity.get();
         stock.setQty(stockDTO.getQuantity());
+        stock.setAvailableQty(stockDTO.getQuantity());
         stock.setUnitBuyingPrice(stockDTO.getUnitBuyingPrice());
         stock.setUnitSellingPrice(stockDTO.getUnitSellingPrice());
         stock.setSupplierEntity(supplierServiceDao.findById(stockDTO.getSupplierId()).get());

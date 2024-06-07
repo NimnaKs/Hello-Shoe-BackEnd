@@ -21,6 +21,7 @@ public class StockEntity {
     private int qty;
     private Double unitBuyingPrice;
     private Double unitSellingPrice;
+    private int availableQty;
 
     @ManyToOne
     @JoinColumn(name = "supplierCode",nullable = false)

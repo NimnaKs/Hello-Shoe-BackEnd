@@ -2,6 +2,8 @@ package com.codeventlk.helloshoemanagementsystem.entity;
 
 import com.codeventlk.helloshoemanagementsystem.Enum.Gender;
 import com.codeventlk.helloshoemanagementsystem.Enum.Level;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -39,6 +41,7 @@ public class CustomerEntity {
     private String email;
     private Timestamp recentPurchasedDate;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customerEntity",cascade = CascadeType.ALL)
     private List<OrderEntity> orderEntities;
 
