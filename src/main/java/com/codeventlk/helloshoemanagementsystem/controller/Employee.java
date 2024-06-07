@@ -163,7 +163,7 @@ public class Employee {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<String> deleteCustomer(@PathVariable ("id") String id){
+    public ResponseEntity<String> deleteEmployee(@PathVariable ("id") String id){
         try {
             employeeService.deleteEmployee(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Employee Details deleted Successfully.");

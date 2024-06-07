@@ -28,7 +28,5 @@ public class ItemEntity {
     @JoinColumn(name = "varietyCode",nullable = true)
     private VarietyEntity varietyEntity;
 
-    @OneToMany(mappedBy = "itemEntity",cascade = CascadeType.ALL)
-    private List<StockEntity> stockEntities;
 
 }

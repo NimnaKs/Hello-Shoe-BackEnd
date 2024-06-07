@@ -142,4 +142,16 @@ public class Supplier {
                     .body("Internal server error | Stock saved Unsuccessfully.\nMore Details\n" + exception.getMessage());
         }
     }
+
+    @GetMapping("/getAllStock")
+    public ResponseEntity<?> getAllStock(){
+        try {
+            return ResponseEntity.ok(stockService.getAllStock());
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employees not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Employees Details fetched Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
 }

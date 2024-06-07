@@ -119,4 +119,8 @@ public class ConversionData {
     public List<BranchDTO> toBranchDTOs(List<BranchEntity> all) {
         return modelMapper.map(all, List.class);
     }
+
+    public List<StockDTO> toStockEntity(List<StockEntity> all) {
+        return modelMapper.map(all, List.class);
+    }
 }

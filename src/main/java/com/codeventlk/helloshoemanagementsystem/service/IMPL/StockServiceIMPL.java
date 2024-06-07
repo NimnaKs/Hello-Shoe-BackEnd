@@ -1,15 +1,15 @@
 package com.codeventlk.helloshoemanagementsystem.service.IMPL;
 
-import com.codeventlk.helloshoemanagementsystem.Util.UtilMatters;
+import com.codeventlk.helloshoemanagementsystem.conversion.ConversionData;
 import com.codeventlk.helloshoemanagementsystem.dto.StockDTO;
 import com.codeventlk.helloshoemanagementsystem.entity.*;
 import com.codeventlk.helloshoemanagementsystem.repository.*;
 import com.codeventlk.helloshoemanagementsystem.service.StockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -19,6 +19,7 @@ public class StockServiceIMPL implements StockService {
     private final StockServiceDao stockServiceDao;
 
     private final SupplierServiceDao supplierServiceDao;
+
     private final ItemServiceDao itemServiceDao;
 
     private final SizeServiceDao sizeServiceDao;
@@ -27,7 +28,7 @@ public class StockServiceIMPL implements StockService {
 
     private final BranchServiceDao branchServiceDao;
 
-    private final StockSizeServiceDao stockSizeServiceDao;
+    private final ConversionData conversionData;
 
     @Override
     public String getStockId() {
@@ -40,26 +41,25 @@ public class StockServiceIMPL implements StockService {
         EmployeeEntity byEmail = employeeServiceDao.findByEmail(email);
         Optional<BranchEntity> branch = branchServiceDao.findById(byEmail.getBranch().getBranchId());
         BranchEntity branchEntity = branch.get();
-
-        StockEntity stockEntity = stockServiceDao.save(new StockEntity(
-                getNextStockId(),
-                supplierServiceDao.findById(stockDTO.getSupplierId()).get(),
-                itemServiceDao.findById(stockDTO.getItemId()).get(),
-                new Date(),
-                branchEntity
-        ));
-
         SizeEntity sizeEntity = sizeServiceDao.findById(stockDTO.getSizeId()).get();
 
-        stockSizeServiceDao.save(new StockSizeEntity(
-                UtilMatters.generateId(),
+        stockServiceDao.save(new StockEntity(
+                getNextStockId(),
+                new Date(),
                 stockDTO.getQuantity(),
                 stockDTO.getUnitBuyingPrice(),
                 stockDTO.getUnitSellingPrice(),
-                stockEntity,
+                supplierServiceDao.findById(stockDTO.getSupplierId()).get(),
+                itemServiceDao.findById(stockDTO.getItemId()).get(),
+                branchEntity,
                 sizeEntity
         ));
 
+    }
+
+    @Override
+    public List<StockDTO> getAllStock() {
+        return conversionData.toStockEntity(stockServiceDao.findAll());
     }
 
     public String getNextStockId(){

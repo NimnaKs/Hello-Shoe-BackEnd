@@ -18,6 +18,4 @@ public class SizeEntity {
     @Id
     private String sizeCode;
     private String sizeDesc;
-    @OneToMany(mappedBy = "sizeEntity",cascade = CascadeType.ALL)
-    private List<StockSizeEntity> stockSizeEntities;
 }
