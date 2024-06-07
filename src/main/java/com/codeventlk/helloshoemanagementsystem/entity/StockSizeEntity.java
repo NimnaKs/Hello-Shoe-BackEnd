@@ -1,11 +1,17 @@
 package com.codeventlk.helloshoemanagementsystem.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table (name = "StockSize")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class StockSizeEntity {
 
     @Id
@@ -14,14 +20,13 @@ public class StockSizeEntity {
     private Double unitBuyingPrice;
     private Double unitSellingPrice;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "stockId",nullable = false)
     private StockEntity stockEntity;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "sizeCode",nullable = false)
     private SizeEntity sizeEntity;
-
-    @OneToMany(mappedBy = "stockSizeEntity",cascade = CascadeType.ALL)
-    private List<StockSizeOrderDetailsEntity> stockSizeOrderDetailsEntities;
 }

@@ -101,7 +101,6 @@ public class Employee {
     @GetMapping(produces = "application/json")
     public ResponseEntity<?> getEmployee(){
         try {
-            System.out.println(employeeService.getAllEmployee());
             return ResponseEntity.ok(employeeService.getAllEmployee());
         } catch (NotFoundException exception) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employees not found.");

@@ -1,10 +1,12 @@
 package com.codeventlk.helloshoemanagementsystem.controller;
 
+import com.codeventlk.helloshoemanagementsystem.dto.StockDTO;
 import com.codeventlk.helloshoemanagementsystem.dto.SupplierDTO;
 import com.codeventlk.helloshoemanagementsystem.exception.NotFoundException;
 import com.codeventlk.helloshoemanagementsystem.service.StockService;
 import com.codeventlk.helloshoemanagementsystem.service.SupplierService;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/supplier")
 @AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:63342")
+@Slf4j
 public class Supplier {
     final private SupplierService supplierService;
     final private StockService stockService;
@@ -116,6 +119,27 @@ public class Supplier {
         } catch (Exception exception) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
                     body("Internal server error | Stock Id fetched Unsuccessfully.\nMore Reason\n" + exception);
+        }
+    }
+
+    @PostMapping(value = "/saveStock/{email}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<?> saveStock(@Validated @RequestBody StockDTO stockDTO,
+                                       BindingResult bindingResult,
+                                       @PathVariable("email") String email) {
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        try {
+            stockService.saveStock(stockDTO, email);
+            log.info("StockDto : "+stockDTO+" email : "+email);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Stock Details saved Successfully.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Internal server error | Stock saved Unsuccessfully.\nMore Details\n" + exception.getMessage());
         }
     }
 }
