@@ -154,4 +154,42 @@ public class Supplier {
                     body("Internal server error | Employees Details fetched Unsuccessfully.\nMore Reason\n"+exception);
         }
     }
+
+    @PutMapping(value = "/updateStock/{stockId}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<?> updateStock(@Validated @RequestBody StockDTO stockDTO,
+                                       BindingResult bindingResult,
+                                       @PathVariable("stockId") String stockId) {
+
+        log.info("StockDto : " +stockDTO+" "+stockId);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(bindingResult.getFieldErrors().get(0).getDefaultMessage());
+        }
+
+        try {
+            stockService.updateStock(stockDTO,stockId);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Stock Details Updated Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Stock not found.");
+        } catch (Exception exception) {
+            log.info("Exception : "+exception);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Stock Details Updated Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping(value = "/deleteStock/{stockId}")
+    public ResponseEntity<String> deleteStock(@PathVariable ("stockId") String id){
+        try {
+            stockService.deleteStock(id);
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Stock Details deleted Successfully.");
+        } catch (NotFoundException exception) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Stock not found.");
+        } catch (Exception exception) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).
+                    body("Internal server error | Stock Details deleted Unsuccessfully.\nMore Reason\n"+exception);
+        }
+    }
 }

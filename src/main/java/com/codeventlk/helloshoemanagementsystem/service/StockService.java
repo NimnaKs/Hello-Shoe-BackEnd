@@ -10,4 +10,8 @@ public interface StockService {
     void saveStock(StockDTO stockDTO, String email);
 
     List<StockDTO> getAllStock();
+
+    void updateStock(StockDTO stockDTO, String stockId);
+
+    void deleteStock(String id);
 }
